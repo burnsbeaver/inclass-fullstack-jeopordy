@@ -18,8 +18,20 @@ var GameSchema = new Schema({
   user: String,
   points: Number,
   board: [Boolean],
-  categogories: [CategorySchema]
+  categories: [CategorySchema]
 });
+
+GameSchema.pre('save', function(next){
+  const emptyBoard = [
+    false, false, false, false, false, false,
+    false, false, false, false, false, false,
+    false, false, false, false, false, false,
+    false, false, false, false, false, false,
+    false, false, false, false, false, false
+  ];
+  this.board = emptyBoard;
+  next();
+})
 
 var Question = mongoose.model("Question", QuestionSchema);
 var Category = mongoose.model("Category", CategorySchema);
